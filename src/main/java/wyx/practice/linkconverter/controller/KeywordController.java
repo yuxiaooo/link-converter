@@ -1,5 +1,6 @@
 package wyx.practice.linkconverter.controller;
 
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -7,8 +8,9 @@ import org.springframework.web.bind.annotation.RestController;
 import wyx.practice.linkconverter.entity.SimpleResponse;
 import wyx.practice.linkconverter.entity.UrlEntity;
 import wyx.practice.linkconverter.service.ConverterService;
+import wyx.practice.linkconverter.utils.Validator;
 
-import java.util.regex.Pattern;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * 神兽护佑,bug退散
@@ -17,7 +19,6 @@ import java.util.regex.Pattern;
  */
 @RestController
 public class KeywordController {
-
 
 
     private final
@@ -29,13 +30,24 @@ public class KeywordController {
     }
 
     @PostMapping("/shorter/link")
-    public SimpleResponse<UrlEntity> convert2ShortLink(@RequestParam("link") String link) {
-        return new SimpleResponse<>(converterService.generateUrlCode(link));
+    public SimpleResponse<UrlEntity> convert2ShortLink(@RequestParam("link")
+                                                       @ApiParam("待转换长链接")
+                                                               String link, HttpServletResponse response) {
+        if (!Validator.isUrl(link)) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
+
+        UrlEntity entity = converterService.generateUrlCode(link);
+        return new SimpleResponse<>(entity);
+
+
     }
 
     @PostMapping("/custom/keyword")
-    public SimpleResponse<UrlEntity> customKeyWord(@RequestParam("link") String link,@RequestParam("keyword") String keyword){
-        return new SimpleResponse<>(converterService.generateUrlCode(link,keyword));
+    public SimpleResponse<UrlEntity> customKeyWord(@RequestParam("link") @ApiParam("待转换长链接") String link
+            , @RequestParam("keyword") @ApiParam("自定义的短链接") String keyword) {
+
+        return new SimpleResponse<>(converterService.generateUrlCode(link, keyword));
     }
 
 }
