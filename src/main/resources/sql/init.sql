@@ -12,8 +12,12 @@ CREATE TABLE IF NOT EXISTS `t_url_keyword` (
   KEY `idx_url` (`url`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE IF NOT EXISTS `t_url_count`(
-  `pk_id` INT(11) NOT NULL COMMENT '主键',
-  `fk_uk_id` INT(11) NOT NULL COMMENT '长链接短码id',
-  ``
-)
+CREATE TABLE IF NOT EXISTS `t_url_access_times` (
+  `pk_id` int(11) NOT NULL COMMENT '主键',
+  `fk_uk_id` int(11) NOT NULL COMMENT 't_url_keyword primary key',
+  `access_times` bigint(20) DEFAULT NULL COMMENT '访问次数',
+  `updated_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `created_time` datetime DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`pk_id`),
+  KEY `idx_uk_id` (`fk_uk_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT 'url访问表';
