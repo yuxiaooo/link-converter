@@ -24,6 +24,7 @@ import static org.junit.Assert.*;
 @RunWith(SpringRunner.class)
 @Transactional
 public class CountServiceTest {
+    private static final String TEST_URL="http://www.baidu.com";
 
     @Autowired
     private AccessRepository accessRepository;
@@ -41,7 +42,7 @@ public class CountServiceTest {
 
     @Test
     public void testCountPlus(){
-        int i = accessRepository.updateAccessTimes(1);
+        int i = accessRepository.updateAccessTimes(14);
         assertTrue(i==1);
     }
 }

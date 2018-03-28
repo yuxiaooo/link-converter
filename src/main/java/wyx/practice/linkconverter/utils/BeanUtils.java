@@ -15,7 +15,7 @@ public class BeanUtils {
             UrlEntity entity = new UrlEntity();
             entity.setKeyword(source.getKeyword());
             entity.setUrl(source.getUrl());
-            entity.
+            entity.setId(source.getId());
             return entity;
         }else{
             return null;
