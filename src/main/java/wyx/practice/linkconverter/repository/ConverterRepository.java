@@ -20,4 +20,5 @@ public interface ConverterRepository extends CrudRepository<UrlDao,Integer>{
      */
     UrlDao findByKeywordAndDeleted(String keyword,Integer deleted);
 
+    UrlDao findByUrl(String url);
 }

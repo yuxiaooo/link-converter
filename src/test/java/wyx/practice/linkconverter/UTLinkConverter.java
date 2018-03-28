@@ -3,6 +3,7 @@ package wyx.practice.linkconverter;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Test;
 import wyx.practice.linkconverter.shortid.ShortId;
+import wyx.practice.linkconverter.utils.Validator;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -38,5 +39,11 @@ public class UTLinkConverter {
         ShortId.worker(1);
         ShortId.seed(3213124324L);
         System.out.println(ShortId.generate());
+    }
+
+    @Test
+    public void testUrlMatches(){
+        String url = "http://baidu.com/sfdsa/erqewrew";
+        System.out.println(Validator.isUrl(url));
     }
 }

@@ -49,6 +49,7 @@ public class Validator {
      */
     private static final String REGEX_IP_ADDR = "(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)";
 
+
     /**
      * 校验用户名
      *

@@ -1,5 +1,7 @@
 package wyx.practice.linkconverter.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -11,6 +13,8 @@ import java.time.LocalDateTime;
 public class UrlEntity implements Serializable{
 
     private static final long serialVersionUID = -6124458321245547331L;
+    @JsonIgnore
+    private int id;
     /**
      * 短码
      */
@@ -34,5 +38,13 @@ public class UrlEntity implements Serializable{
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
