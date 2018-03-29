@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import wyx.practice.linkconverter.entity.SimpleResponse;
 import wyx.practice.linkconverter.entity.UrlEntity;
+import wyx.practice.linkconverter.exception.BizException;
 import wyx.practice.linkconverter.service.ConverterService;
 import wyx.practice.linkconverter.utils.Validator;
 
@@ -34,7 +35,7 @@ public class KeywordController {
                                                        @ApiParam("待转换长链接")
                                                                String link, HttpServletResponse response) {
         if (!Validator.isUrl(link)) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            throw new BizException(BizException.ILLEGAL_URL);
         }
 
         UrlEntity entity = converterService.generateUrlCode(link);
@@ -46,7 +47,9 @@ public class KeywordController {
     @PostMapping("/custom/keyword")
     public SimpleResponse<UrlEntity> customKeyWord(@RequestParam("link") @ApiParam("待转换长链接") String link
             , @RequestParam("keyword") @ApiParam("自定义的短链接") String keyword) {
-
+        if (!Validator.isUrl(link) || !Validator.isAlphaNumber(keyword)) {
+            throw new BizException(BizException.INVALID_ARGS);
+        }
         return new SimpleResponse<>(converterService.generateUrlCode(link, keyword));
     }
 

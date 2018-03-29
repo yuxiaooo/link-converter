@@ -1,6 +1,7 @@
 package wyx.practice.linkconverter;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.junit.Assert;
 import org.junit.Test;
 import wyx.practice.linkconverter.shortid.ShortId;
 import wyx.practice.linkconverter.utils.Validator;
@@ -8,6 +9,8 @@ import wyx.practice.linkconverter.utils.Validator;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+
+import static org.junit.Assert.*;
 
 /**
  * 神兽护佑,bug退散
@@ -45,5 +48,13 @@ public class UTLinkConverter {
     public void testUrlMatches(){
         String url = "http://baidu.com/sfdsa/erqewrew";
         System.out.println(Validator.isUrl(url));
+    }
+
+    @Test
+    public void checkKeyword(){
+        assertTrue(Validator.isAlphaNumber("123fdsa"));
+        assertFalse(Validator.isAlphaNumber("123!!!"));
+        assertFalse(Validator.isAlphaNumber("!!~~~~"));
+//        System.out.println();
     }
 }

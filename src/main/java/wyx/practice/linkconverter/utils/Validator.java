@@ -49,7 +49,7 @@ public class Validator {
      */
     private static final String REGEX_IP_ADDR = "(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)";
 
-
+    private static final String REGEX_ALPHA_NUMBER = "^[A-Za-z0-9]+$";
     /**
      * 校验用户名
      *
@@ -129,5 +129,12 @@ public class Validator {
     public static boolean isIPAddr(String ipAddr) {
         return Pattern.matches(REGEX_IP_ADDR, ipAddr);
     }
+
+    /**
+     * 校验数字字母
+     * @param s
+     * @return
+     */
+    public static boolean isAlphaNumber(String s){return Pattern.matches(REGEX_ALPHA_NUMBER,s);}
 }
 

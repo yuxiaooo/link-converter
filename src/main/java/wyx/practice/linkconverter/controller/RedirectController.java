@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import wyx.practice.linkconverter.entity.UrlEntity;
 import wyx.practice.linkconverter.service.ConverterService;
 import wyx.practice.linkconverter.service.CountService;
+import wyx.practice.linkconverter.utils.Validator;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -38,13 +39,17 @@ public class RedirectController {
 
     @GetMapping("/{urlCode}")
     public void parseUrl(@PathVariable String urlCode, HttpServletResponse response){
-        response.setStatus(HttpServletResponse.SC_MOVED_TEMPORARILY);
-
+        if(!Validator.isAlphaNumber(urlCode)){
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            return;
+        }
         UrlEntity urlEntity = converterService.findByUrlCode(urlCode);
+
         if(urlEntity != null){
             threadPoolTaskExecutor.submit(()->{
                countService.count(urlEntity.getId());
             });
+            response.setStatus(HttpServletResponse.SC_MOVED_TEMPORARILY);
             response.setHeader(HEADER_LOCATION,urlEntity.getUrl());
             response.setHeader(HEADER_CONNECTION,CONNECTION_STATUS_CLOSE);
         }else{
